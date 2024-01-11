@@ -315,7 +315,7 @@ The above example demonstrates an important property of permutations: closed und
         \hline
         $(13)$ & & & & & \\
         \hline
-        $(23)$ & (23) & (132) & (123) & $\mathbb{I}$ & (13) & (12)\\
+        $(23)$ & (23) & (132) & (123) & $\mathds{1}$ & (13) & (12)\\
         \hline
         $(123)$ & & & & & \\
         \hline
@@ -338,3 +338,266 @@ This is a multiplication table of $S_3$. Symmetries of the same group have the s
 In other words, if a permutation $\alpha$ can be expressed as a product of transpositions \[
     \alpha = \tau_1 \tau_2 \dots \tau_n \qquad \text{ and } \qquad \alpha = \sigma_1 \sigma_2 \dots \sigma_m
 \] where $\tau$ and $\sigma$ are transpositions, then $n$ and $m$ have the same parity (both even or both odd). The smaller groups are called \term{alternating groups}.
+
+\begin{example}
+    Consider the following figure of a cube.
+
+    % TODO: figure
+    \begin{center}
+        \begin{tikzpicture}
+            % Coordinates of the vertices
+            \coordinate (A) at (0, 0);
+            \coordinate (B) at (0, 2);
+            \coordinate (C) at (2, 2);
+            \coordinate (D) at (2, 0);
+            \coordinate (E) at (0.5, 0.5);
+            \coordinate (F) at (0.5, 2.5);
+            \coordinate (G) at (2.5, 2.5);
+            \coordinate (H) at (2.5, 0.5);
+
+            % The cube
+            \draw (A) -- (B) -- (C) -- (D) -- cycle;
+            \draw (A) -- (E) -- (F) -- (B);
+            \draw (D) -- (H) -- (G) -- (C);
+            \draw (E) -- (F) -- (G) -- (H) -- cycle;
+
+            % The center of the top face
+            \draw[dashed] (B) -- (G);
+            \draw[dashed] (F) -- (C);
+            \node[graph-node,red] at (1.25, 2.25) {};
+
+            % The vertices
+            \node[graph-node,blue]   at (A) {};
+            \node[graph-node,orange] at (B) {};
+            \node[graph-node,blue]   at (C) {};
+            \node[graph-node,orange] at (D) {};
+            \node[graph-node,orange] at (E) {};
+            \node[graph-node,blue]   at (F) {};
+            \node[graph-node,orange] at (G) {};
+            \node[graph-node,blue]   at (H) {};
+
+            % The label $C$
+            \node[magenta] at (2, 2.25) {$C$};
+        \end{tikzpicture}
+    \end{center} which expands to the following graph.
+
+    % TODO: figure
+    \begin{center}
+        \begin{tikzpicture}
+            % The cube expanded to 2D
+            \draw (0, 0) -- (0, 1) -- (1, 1) -- (1, 0) -- cycle;
+            \draw (0, 0) -- (-1, 0) -- (-1, 1) -- (0, 1);
+            \draw (1, 1) -- (2, 1) -- (2, 0) -- (1, 0);
+            \draw (2, 1) -- (3, 1) -- (3, 0) -- (2, 0);
+            \draw (0, 1) -- (0, 2) -- (1, 2) -- (1, 1);
+            \draw (1, 0) -- (1, -1) -- (0, -1) -- (0, 0);
+
+            % Crosses on the cube
+            \draw[dashed] (-1, 1) -- (0, 0) -- (1, 1) -- (2, 0) -- (3, 1);
+            \draw[dashed] (-1, 0) -- (0, 1) -- (1, 0) -- (2, 1) -- (3, 0);
+            \draw[dashed] (0, 2) -- (1, 1);
+            \draw[dashed] (0, 1) -- (1, 2);
+            \draw[dashed] (0, -1) -- (1, 0);
+            \draw[dashed] (0, 0) -- (1, -1);
+
+            % The vertices
+            \node[graph-node,blue]   at (-1, 0) {};
+            \node[graph-node,orange] at (-1, 1) {};
+            \node[graph-node,orange] at (0, 0) {};
+            \node[graph-node,blue]   at (0, 1) {};
+            \node[graph-node,orange] at (1, 1) {};
+            \node[graph-node,blue]   at (1, 0) {};
+            \node[graph-node,orange] at (0, 2) {};
+            \node[graph-node,blue]   at (1, 2) {};
+            \node[graph-node,orange] at (1, -1) {};
+            \node[graph-node,blue]   at (0, -1) {};
+            \node[graph-node,blue]   at (2, 1) {};
+            \node[graph-node,orange] at (2, 0) {};
+            \node[graph-node,orange] at (3, 1) {};
+            \node[graph-node,blue]   at (3, 0) {};
+
+            % The centers of the crosses
+            \node[graph-node,red] at (-0.5, 0.5) {};
+            \node[graph-node,red] at (0.5, 0.5) {};
+            \node[graph-node,red] at (0.5, 0.5) {};
+            \node[graph-node,red] at (0.5, 1.5) {};
+            \node[graph-node,red] at (0.5, -0.5) {};
+            \node[graph-node,red] at (1.5, 0.5) {};
+            \node[graph-node,red] at (2.5, 0.5) {};
+
+            % The label $C$
+            \node[right,magenta] at (0.5, 0.5) {$C$};
+        \end{tikzpicture}
+    \end{center}
+
+    \textbf{Question}: What are the isometries that preserve the colouring of this object?
+
+    \begin{definition}[Isometry]\index{Isometry}\label{def:isometry}
+        An \term{isometry} is a transformation that preserves distance.
+    \end{definition}
+
+    \begin{remark}
+        Consider reflection with respect to the planes $\sigma_1$, $\sigma_2$, and $\sigma_3$.
+
+            \begin{center}
+                \begin{tikzpicture}[baseline=(current bounding box.south)]
+                    % Coordinates of the vertices
+                    \coordinate (A) at (0, 0);
+                    \coordinate (B) at (0, 2);
+                    \coordinate (C) at (2, 2);
+                    \coordinate (D) at (2, 0);
+                    \coordinate (E) at (0.5, 0.5);
+                    \coordinate (F) at (0.5, 2.5);
+                    \coordinate (G) at (2.5, 2.5);
+                    \coordinate (H) at (2.5, 0.5);
+
+                    % The cube
+                    \draw (A) -- (B) -- (C) -- (D) -- cycle;
+                    \draw (A) -- (E) -- (F) -- (B);
+                    \draw (D) -- (H) -- (G) -- (C);
+                    \draw (E) -- (F) -- (G) -- (H) -- cycle;
+
+                    % The plane
+                    \draw[thick,orange] (-0.5, -0.5) -- (3, 3);
+                    \node[orange,right] at (3, 3) {$\sigma_1$};
+                \end{tikzpicture}
+                \hfil%
+                \begin{tikzpicture}[baseline=(current bounding box.south)]
+                    % Coordinates of the vertices
+                    \coordinate (A) at (0, 0);
+                    \coordinate (B) at (0, 2);
+                    \coordinate (C) at (2, 2);
+                    \coordinate (D) at (2, 0);
+                    \coordinate (E) at (0.5, 0.5);
+                    \coordinate (F) at (0.5, 2.5);
+                    \coordinate (G) at (2.5, 2.5);
+                    \coordinate (H) at (2.5, 0.5);
+
+                    % The cube
+                    \draw (A) -- (B) -- (C) -- (D) -- cycle;
+                    \draw (A) -- (E) -- (F) -- (B);
+                    \draw (D) -- (H) -- (G) -- (C);
+                    \draw (E) -- (F) -- (G) -- (H) -- cycle;
+
+                    % The plane
+                    \draw[thick,orange] (0, -0.5) -- (0, 3) -- (2.5, 3.5) -- (2.5, 0) -- cycle;
+                    \draw[thick,dashed,orange] (A) -- (H);
+                    \draw[thick,dashed,orange] (B) -- (G);
+                    \node[orange,right] at (2.5, 3.5) {$\sigma_2$};
+                \end{tikzpicture}
+                \hfil
+                \begin{tikzpicture}[baseline=(current bounding box.south)]
+                    % Coordinates of the vertices
+                    \coordinate (A) at (0, 0);
+                    \coordinate (B) at (0, 2);
+                    \coordinate (C) at (2, 2);
+                    \coordinate (D) at (2, 0);
+                    \coordinate (E) at (0.5, 0.5);
+                    \coordinate (F) at (0.5, 2.5);
+                    \coordinate (G) at (2.5, 2.5);
+                    \coordinate (H) at (2.5, 0.5);
+
+                    % The cube
+                    \draw (A) -- (B) -- (C) -- (D) -- cycle;
+                    \draw (A) -- (E) -- (F) -- (B);
+                    \draw (D) -- (H) -- (G) -- (C);
+                    \draw (E) -- (F) -- (G) -- (H) -- cycle;
+
+                    % The plane
+                    \draw[thick,orange] (0.5, 3) -- (2, 2.5) -- (2, -0.5) -- (0.5, 0) -- cycle;
+                    \draw[thick,dashed,orange] (C) -- (F);
+                    \draw[thick,dashed,orange] (D) -- (E);
+                    \node[orange,right] at (2, -0.5) {$\sigma_3$};
+                \end{tikzpicture}
+            \end{center}
+
+            % TODO: graphs of $\sigma_1$, $\sigma_2$, and $\sigma_3$. 
+    \end{remark}
+
+    \begin{center}
+        \begin{tikzpicture}
+            % The cube expanded to 2D
+            \draw (0, 0) -- (0, 2) -- (2, 2) -- (2, 0) -- cycle;
+            \draw (0, 0) -- (-2, 0) -- (-2, 2) -- (0, 2);
+            \draw (2, 2) -- (4, 2) -- (4, 0) -- (2, 0);
+            \draw (4, 2) -- (6, 2) -- (6, 0) -- (4, 0);
+            \draw (0, 2) -- (0, 4) -- (2, 4) -- (2, 2);
+            \draw (2, 0) -- (2, -2) -- (0, -2) -- (0, 0);
+
+            % Crosses on the cube
+            \draw[dashed] (-2, 2) -- (0, 0) -- (2, 2) -- (4, 0) -- (6, 2);
+            \draw[dashed] (-2, 0) -- (0, 2) -- (2, 0) -- (4, 2) -- (6, 0);
+            \draw[dashed] (0, 4) -- (2, 2);
+            \draw[dashed] (0, 2) -- (2, 4);
+            \draw[dashed] (0, -2) -- (2, 0);
+            \draw[dashed] (0, 0) -- (2, -2);
+
+            % The vertices
+            \node[graph-node,blue]   at (-2, 0) {};
+            \node[graph-node,orange] at (-2, 2) {};
+            \node[graph-node,orange] at (0, 0) {};
+            \node[graph-node,blue]   at (0, 2) {};
+            \node[graph-node,orange] at (2, 2) {};
+            \node[graph-node,blue]   at (2, 0) {};
+            \node[graph-node,orange] at (0, 2) {};
+            \node[graph-node,blue]   at (2, 2) {};
+            \node[graph-node,orange] at (2, -2) {};
+            \node[graph-node,blue]   at (0, -2) {};
+            \node[graph-node,blue]   at (4, 2) {};
+            \node[graph-node,orange] at (4, 0) {};
+            \node[graph-node,orange] at (6, 2) {};
+            \node[graph-node,blue]   at (6, 0) {};
+
+            % The centers of the crosses
+            \node[graph-node,red] at (-1, 1) {};
+            \node[graph-node,red] at (1, 1) {};
+            \node[graph-node,red] at (1, 1) {};
+            \node[graph-node,red] at (1, 3) {};
+            \node[graph-node,red] at (1, -1) {};
+            \node[graph-node,red] at (3, 1) {};
+            \node[graph-node,red] at (5, 1) {};
+
+            % The label $C$
+            \node[magenta] at (1.5, 1) {$C$};
+            \node[magenta] at (2.5, 1) {$\sigma_1C$};
+            \node[magenta] at (1, 1.5) {$\sigma_2C$};
+            \node[magenta] at (1, 0.5) {$\sigma_3C$};
+            \node[magenta] at (0.5, 1) {$D$};
+        \end{tikzpicture}
+    \end{center}
+
+    $D$ can be obtained by either $\sigma_3 \sigma_2 C$ or $\sigma_2 \sigma_3 C$. \[ \begin{matrix}
+        \mathbb{R}^3 & \to & \mathbb{R}^3 & \to & \mathbb{R}^3 \\
+        & \sigma_3 & & \sigma_2 & \\
+        & \sigma_2 & & \sigma_3 &
+    \end{matrix} \]
+
+    Matrices are not commute, and thus these transformations may be different. We ask the questions: since $\sigma_2 \sigma_1$ and $\sigma_1 \sigma_2$ move the triangle $C$ in the same way, are they the same map?
+
+    \begin{proposition}
+        If $S, T: \mathbb{R}^3 \to \mathbb{R}^3$ preserve the coloured ube and send the triangle to the same place, then $S = T$ (as maps). 
+    \end{proposition}
+
+    \begin{proof}
+        WTS $S = T$.
+
+        \begin{remark}
+            It is important that the triangle $C$ is a field of vectors. 
+        \end{remark}
+        Consider $o = (0, 0, \frac{1}{2})$, $b = (\frac{1}{2}, \frac{1}{2}, \frac{1}{2})$, and $y = (-\frac{1}{2}, \frac{-1}{2}, \frac{1}{2})$. 
+
+        $Sb = Tb, So = To, Sy = Ty \implies (S - T)b = 0, (S - T)o = 0, (S - T)y = 0$.
+
+        This implies $b$, $o$, and $y$ are in the kernel of $S - T$. 
+
+        Moreover, $b, o, y$ are linearly independent since $\det \begin{bmatrix}
+            \frac{1}{2} & 0 & -\frac{1}{2} \\
+            \frac{1}{2} & 0 & -\frac{1}{2} \\
+            \frac{1}{2} & \frac{1}{2} & \frac{1}{2}
+        \end{bmatrix} \neq 0$.
+
+        Thus, $\dim \ker (S - T) = 3$. Since $\dim \mathbb{R}^3 = 3$, $\ker (S - T) = \mathbb{R}^3$. Thus, $S - T = 0$.
+    \end{proof}
+
+    We can reach all 24 locations of the triangle $C$ by applying $\sigma_1$, $\sigma_2$, and $\sigma_3$ to the triangle $C$. Thus, there are 24 isometries that preserve the coloured cube. Moreover, we know that $3$ of them generates the set. It suffices to study these three isometries to understand the whole group.
+\end{example}
