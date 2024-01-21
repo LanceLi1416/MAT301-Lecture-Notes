@@ -146,3 +146,82 @@ We have a group that is the one generator by the operations of the `toy` above. 
 \end{center}
 
 If we only allow $H_1, V_1, H_2, V_2$, then the locations are believable. The group they generate is $S_4$. 
+
+\begin{remark}
+    Think of $S_4$ independently. 
+
+    We consider the permutations independently as a group. 
+
+    \begin{center}
+        \includegraphics[width=0.55\linewidth]{figures/permutations-of-s4.png}
+    \end{center}
+\end{remark}
+
+We want to merge $R$ with the rest of the operations. 
+
+Consider \[
+    H_1 R = R V_1 \qquad H_2 R = R V_2
+\]
+
+\begin{center}
+    \includegraphics[width=0.45\linewidth]{figures/r-v1.png}
+\end{center}
+
+\begin{example}
+    ``Simplify'' the instructions  \[
+        R V_1 H_2 R V_2 H_1 H_2 R V_1 H_2
+    \]
+
+    Using the two equations above, 
+    \begin{align*}
+        R V_1 H_2 R V_2 H_1 H_2 R V_1 H_2
+         & = R V_1 H_2 R V_2 H_1 {\color{red}R V_2} V_1 H_2             \\
+         & = R V_1 H_2 R V_2 {\color{red}R V_1} V_2 V_1 H_2             \\
+         & = R V_1 H_2 R {\color{red}R H_2} V_1 V_2 V_1 H_2             \\
+         & = R V_1 H_2 {\color{red}V_1 V_2 H_1 H_2} H_2 V_1 V_2 V_1 H_2
+         & (RR = V_1 V_2 H_1 H_2)                                       \\
+    \end{align*}
+
+    This way, we have moved all the ``noice'', $R$, to the last steps. 
+\end{example}
+
+\textbf{Fact:} All elements of the group can be written as \[
+    X \sigma
+\] where $X = 1 \text{ or } R$ and $\sigma \in S_4$. 
+
+\begin{proposition}
+    This writing is \bred{unique}. 
+\end{proposition}
+
+\begin{proof}
+    Suppose $X_1 \sigma_1 = X_2 \sigma_2$. 
+
+    \begin{listu}
+        \item If $X_1 = X_2 = 1$, then $\sigma_1 = \sigma_2$.
+
+        \item If $X_1 = X_2 = R$, then $R \sigma_1 = R \sigma_2$.
+
+        Multiplying by $R^{-1}$, we have \[ \begin{aligned}[t]
+            R^{-1} R \sigma_1 & = R^{-1} R \sigma_2 \\
+            \sigma_1          & = \sigma_2
+        \end{aligned} \]
+
+        \item $X_1 = 1, X_2 = R$. Then, \[ \begin{aligned}[t]
+            \sigma_1 & = R \sigma_2 \\
+            \sigma_1 {\sigma_2}^{-1} & = R \sigma_2 {\sigma_2}^{-1} \\
+            \sigma_1 {\sigma_2}^{-1} & = R
+        \end{aligned} \] which means $R \in S_4$, which is impossible.
+    \end{listu}
+\end{proof}
+
+These decomposition also has coordinates. $X$ uses the $R$-coordinate and $\sigma$ uses the $S_4$-coordinate.
+
+We can write this as \[
+    (1, \sigma) \in \pm 1 \times S_4
+\]
+
+However, note that $(s_1, \sigma_1) (s_2, \sigma_2) = (s_1 s_2, \sigma_1 \sigma_2)$ is \bred{not true}. The reason is because there is ``noice'' (procued by $R$) in the first coordinate.
+
+\begin{center}
+    \includegraphics[width=0.67\linewidth]{figures/rotation_s4_table.png}
+\end{center}
