@@ -43,7 +43,9 @@ For every positive integer $n$, we consider the integers modulo $n$.
 \end{example}
 
 \begin{definition}[Cuclic Group]\index{Cyclic Group}\label{def:cyclic-group}
-    A \term{cyclic group} is a group $G$ that has a generator. 
+    Let $n$ be a positive integer. A \term{cyclic group} of order $n$ is one that admits a generator of order $n$. \[
+        C_n = \{ 0, 1, \dots, n - 1 \}
+    \]
 \end{definition}
 
 \begin{definition}[Generator]\index{Generator}\label{def:generator}
@@ -163,13 +165,168 @@ Given a group $G$ and an element $g \in G$, we produce \[
 \end{example}
 
 \begin{proposition}
-    Let $p$ be a prime number. The only group of order $p$ is $C_p$. 
+    Let $p$ be a prime number, and $G$ be a group of order $p$. Then $G$ is cyclic, \[
+        G \cong C_p
+    \]
 \end{proposition}
 
 \begin{proof}
-    {~~~}
+    Let $G$ be a group of order $p$. 
+    
+    Since $p$ is prime, $G$ has at least two elements. Thus, there exists $g \in G$ with $g \neq e$. 
 
-    Let $G$ be a group of order $p$. Since $p$ is prime, $G$ has at least two elements. Thus, there exists $g \in G$ with $g \neq e$. 
+    Since $G$ is finite, $g$ must have a finite order $m$. Thus, \[
+        C_m = \{ 1, g, g^2, \dots, g^{m - 1} \} \subseteq G
+    \]
 
-    % TODO
+    Let $x \in G$ and multiply by $g$ successively by the left. \[
+        x \xrightarrow{g} gx \xrightarrow{g} g^2x \xrightarrow{g} \cdots \xrightarrow{g} g^{m - 1}x \xrightarrow{g} g^mx = x
+    \]
+
+    There is no repetition earlier than $m$, since otherwise $g^ix = g^jx$ for some $0 \le i < j \le m - 1$, so $g^i = g^j$ (since $g$ has order $m$), which is a contradiction.
+
+    Doing this, we see that $G$ decomposes into cycles of size $m$. There must be a finite number of cycles, say $k$. 
+
+    Thus, $|G| = km$, so $p = km$. Since $p$ is prime, $k = 1$ or $m = 1$.
+
+    However, $m \neq 1$ since $g \neq e$. Thus, $k = 1$, so $m = p$ and $G = C_p$.
 \end{proof}
+
+Let us rephrase a step. Let $x \in G$, and multiply $x$ vy every element of $C_m$. 
+
+Doing that we have
+\begin{listu}
+    \item $G$ a group 
+    \item $H$ a subgroup of $G$ of order $m$.
+    \item $x \in G$ an element. 
+\end{listu}
+
+Multiply every element of $H$ by $x$, 
+
+\begin{example}
+    Consider $S_3 = \{ \id, (1, 2), (1, 3), (2, 3), (1, 2, 3), (1, 3, 2) \}$.
+
+    Let $H = \{ \id, (1, 2) \}$.
+
+    \begin{listu}
+        \item $H(2, 3) = \{ 1 (2, 3), (1, 2)(2, 3) \} = \{ (2, 3), (1, 2, 3) \}$
+        \item $H(1, 3) = \{ 1 (1, 3), (1, 2)(1, 3) \} = \{ (1, 3), (1, 3, 2) \}$
+    \end{listu}
+
+    These two sets are called the \term{right cosets} of $H$ in $G$.
+\end{example}
+
+\begin{definition}[Coset]\index{Coset}\label{def:coset}
+    Given a group $G$ and a subgroup $H$, we define a \term{coset} of $H$ in $G$ as a set of the form 
+    \begin{align*}
+        Hx & = \{ hx \mid h \in H \} & (\text{\term{right coset}}) \\
+        xH & = \{ xh \mid h \in H \} & (\text{\term{left coset}})
+    \end{align*}
+
+    We denote by 
+    \begin{listu}
+        \item $H \backslash G$ the set of right cosets of $H$ in $G$, and 
+        \item $G / H$ the set of left cosets of $H$ in $G$.
+    \end{listu}
+\end{definition}
+
+\begin{proposition}
+    Let $G$ be a group and $h$ be a subgroup of $G$. Then 
+    \begin{listo}
+        \item All cosets of $H$ in $G$ have the cardinality of $H$.
+        \item All left cosets are disjoint, and so are all right cosets.
+    \end{listo}
+\end{proposition}
+
+\begin{proof}
+    We prove the two statements. 
+
+    \begin{listo}
+        \item Multiplying by $x$ is a bijection.
+        
+        \item Suppose $xH \cap yH \neq \varnothing$. 
+        
+        Then there exists $z \in xH \cap yH$, that is, $z = xh_1 = yh_2$ for some $h_1, h_2 \in H$.
+        \begin{align*}
+            y^{-1} x h^1 {h_1}^{-1} & = y^{-1} y h_2 {h_1}^{-1} \\ 
+            y^{-1} x                & = h_2 {h_1}^{-1} \in H
+        \end{align*}
+        Then, $y^{-1} x = h$ for some $h \in H$, so $x = yh \in yH$.
+
+        But then for $x \tilde{h} \in xH$, $\begin{aligned}[t]
+            x \tilde{h} & = (yh) \tilde{h} \\
+                        & = y (h \tilde{h}) \in yH
+        \end{aligned}$
+
+        That is, $xH \subseteq yH$. Similarly, $yH \subseteq xH$, so $xH = yH$.
+    \end{listo}
+\end{proof}
+
+\begin{theorem}[Langrange's Theorem]\index{Langrange's Theorem}\label{thm:langrange}
+    Let $G$ be a finite group and $H$ be a subgroup of $G$. Then \[
+        |G| = |H| \text{ divides } |G|
+    \]
+\end{theorem}
+
+\begin{proof}
+    $G$ is a disjoint union of cosets of $H$ in $G$.
+
+    Say there are $k$ cosets. Then \[
+        |G| = k |H| \implies H \mid G
+    \]
+\end{proof}
+
+\begin{corollary}[Corollary of Proposition]\label{cor:cyclic-subgroup}
+    Let $H \leq G$ be a subgroup of a finite group $G$. Then 
+    \begin{listo}
+        \item $xH = yH$ if and only if $y^{-1}x \in H$.
+        \item $Hx = Hy$ if and only if $xy^{-1} \in H$.
+    \end{listo}
+\end{corollary}
+
+\begin{example}
+    $C_n$ has order $N$. $n$ has certain divisors, and $C_n$ has a generator $g$: \[
+        C_n = \{ 1, g, g^2, \dots, g^{n - 1} \}
+    \]
+
+    Consider when $n = 12$. 
+
+    $C_n = \ZZ / 12\ZZ = \{ 0, 1, 2, \dots, 11 \}$
+
+    12 = $4 \times 3$, so the devisors are 
+
+    \begin{table}[ht!]
+        \centering
+        \begin{tabular}{c|c}
+            $1$  & $\{ 0 \}$ \\ \hline
+            $2$  & $\{ 0, 6 \}$ \\ \hline
+            $3$ & $\{ 0, 4, 8 \}$ \\ \hline
+            $4$ & $\{ 0, 3, 6, 9 \}$ \\ \hline
+            $6$ & $\{ 0, 2, 4, 6, 8, 10 \}$ \\ \hline
+            $12$ & $\{ 0, 1, 2, \dots, 11 \}$
+        \end{tabular}
+    \end{table}
+
+    $C_n$has exactly one subgroup of each order dividing $n$.
+
+    We can construct a subgroup map. 
+
+    \begin{figure}[ht!]
+        \centering
+        
+        \begin{tikzpicture}
+            \node (c1) at (0, 0) {$\{ 0 \}$};
+            \node (c2) at (-1, 1) {$\{ 0, 6 \}$};
+            \node (c3) at (1, 2) {$\{ 0, 4, 8 \}$};
+            \node (c4) at (-1, 3) {$\{ 0, 3, 6, 9 \}$};
+            \node (c6) at (1, 4) {$\{ 0, 2, 4, 6, 8, 10 \}$};
+            \node (c12) at (0, 5) {$\{ 0, 1, 2, \dots, 11 \}$};
+
+            \draw (c1) -- (c2) -- (c6) -- (c12);
+            \draw (c1) -- (c3) -- (c6);
+            \draw (c2) -- (c4) -- (c12);
+        \end{tikzpicture}
+    \end{figure}
+
+    This is called the \term{Hasse diagram} of the subgroup lattice of $C_{12}$.
+\end{example}
