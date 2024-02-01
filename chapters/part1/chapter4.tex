@@ -52,10 +52,10 @@ For every positive integer $n$, we consider the integers modulo $n$.
     A \term{generator} of a group $G$ is an element $g \in G$ such that every element of $G$ can be written as a power of $g$.
 \end{definition}
 
-The group of integers modulo $n$ is called the \term{cyclic group of order $n$} and is denoted by $C_n$ or $\ZZ/n\ZZ$.
+The group of integers modulo $n$ is called the \term{cyclic group of order $n$} and is denoted by $C_n$ or $\Z/n\Z$.
 
 \begin{example}
-    The integers $\ZZ$ form a cyclic group under addition. \[ 
+    The integers $\Z$ form a cyclic group under addition. \[ 
         \cdots \xrightarrow{+1} -2 \xrightarrow{+1} -1 \xrightarrow{+1} 0 \xrightarrow{+1} 1 \xrightarrow{+1} 2 \xrightarrow{+1} \cdots 
     \]
 \end{example}
@@ -69,12 +69,12 @@ Given a group $G$ and an element $g \in G$, we produce \[
 
     \begin{listo}
         \item The set of powers of $g$, \[
-            \left\{ g^m \mid m \in \ZZ \right\}
+            \left\{ g^m \mid m \in \Z \right\}
         \] is a subgroup of $G$ (denoted by $\langle g \rangle$).
 
         \item $g$ has order $m$ if and only if $\langle g \rangle$ is isomorphic to $C_m$.
         
-        \item $g$ has no order if and only if $\langle g \rangle$ is isomorphic to $\ZZ$.
+        \item $g$ has no order if and only if $\langle g \rangle$ is isomorphic to $\Z$.
     \end{listo}
 \end{proposition}
 
@@ -103,7 +103,7 @@ Given a group $G$ and an element $g \in G$, we produce \[
 
     Define $\Phi: C_m \to \langle g \rangle$ by $\Phi(k) = g^k$.
 
-    This is well defined if $a \equiv b \pmod{m}$, then $a = b + mt$ for some $t \in \ZZ$. \[
+    This is well defined if $a \equiv b \pmod{m}$, then $a = b + mt$ for some $t \in \Z$. \[
         g^a = g^{b + mt} = g^b \cdot g^{mt} = g^b \cdot (g^m)^t = g^b \cdot 1^t = g^b
     \] 
 
@@ -291,7 +291,7 @@ Multiply every element of $H$ by $x$,
 
     Consider when $n = 12$. 
 
-    $C_n = \ZZ / 12\ZZ = \{ 0, 1, 2, \dots, 11 \}$
+    $C_n = \Z / 12\Z = \{ 0, 1, 2, \dots, 11 \}$
 
     12 = $4 \times 3$, so the devisors are 
 

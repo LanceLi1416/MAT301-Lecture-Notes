@@ -30,10 +30,10 @@
 % ------------------
 % Shortcuts
 % ------------------
-\newcommand{\NN}{\mathbb{N}}
-\newcommand{\RR}{\mathbb{R}}
-\newcommand{\CC}{\mathbb{C}}
-\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
 
 \newcommand{\complexspace}[1]{\complexset^{#1}}
 \newcommand{\realspace}[1]{\realset^{#1}}
@@ -49,8 +49,7 @@
 \newcommand{\GL}{\mathrm{GL}}
 \newcommand{\sgn}{\mathrm{sgn}}
 
-\newcommand{\im}{\mathrm{Im}}
-\renewcommand{\phi}{\varphi}
+\newcommand{\im}[1]{\mathrm{Im}\left( #1 \right)}
 
 \def\lcirclearrowleft{\ensuremath{%
   \rotatebox[origin=c]{180}{$\circlearrowleft$}}}
@@ -70,6 +69,9 @@
     \let\@ifnextchar\new@ifnextchar
     \array{#1}}
 \makeatother
+
+\renewcommand{\phi}{\varphi}
+\renewcommand{\ker}[1]{\mathrm{ker}\left( #1 \right)}
 
 % ------------------
 % Colors
